@@ -9,20 +9,19 @@ namespace Samogina_LAB3
     {
         static void Main()
         {
-            NodeSet l1 = new NodeSet();
-            NodeSet l2 = new NodeSet();
+            Nodelist l1 = new Nodelist();
             Random rnd = new Random();
-            l1.Add(1);
-            l1.Add(2);
-            l1.Add(3);
-            l1.Add(4);
-            l2.Add(5);
-            l2.Add(1);
-            l2.Add(3);
-            l2.Add(8);
-            NodeSet l3=l1.unification_new(l2);    
-            l3.PRINT(); 
-        }
+            l1.Push_back(1);
+            l1.Push_front(3);
+            l1.Push_front(11);
+            l1.Push_front(7);
+            l1.Push_front(2);
+            l1.Push_front(29);
+            Nodelist l2 = new Nodelist();
+            l2=(Nodelist)l1.Clone();
+            l1.Push_back(0);
+            l1.PRINT();
+        }   
     }
 
     class NODE
@@ -42,8 +41,18 @@ namespace Samogina_LAB3
         protected int n;
         protected NODE? Head;
         protected NODE? Tail;
-      //  public Nodelist() { Head = new NODE(); }
-        // private static bool Compare<int>(int a, int b) where int : NODE {return a.Data.ToString() != b.Data.ToString();}
+        public object Clone() {
+            Nodelist ptr = new Nodelist();
+            ptr.n = n;
+            for(int i=0;i<n; i++) {
+                ptr.Push_back(this[i].Data);
+            }
+            return ptr;
+        }
+        public int GetSize()
+        {
+            return n;
+        }
         public NODE Push_front(int data) // добавление в начало
         {
             NODE ptr = new NODE(data);
@@ -212,6 +221,7 @@ namespace Samogina_LAB3
         {
             NODE? ptr = Head;
             while (ptr != null) { Console.Write(ptr.Data); Console.Write(" "); ptr = ptr.Next; }
+            Console.WriteLine();
         }
         public void Input()
         {
@@ -247,7 +257,18 @@ namespace Samogina_LAB3
     }
     class NodeSet : Nodelist {
        // protected Nodelist Nodelist;
+
         public NodeSet() { n = 0; }
+        public object Clone()
+        {
+            NodeSet ptr = new NodeSet();
+            ptr.n = n;
+            for (int i = 0; i < n; i++)
+            {
+                ptr.Push_back(this[i].Data);
+            }
+            return ptr;
+        }
         public void unification(NodeSet other)
         {
             NODE ptr = other.Head;
