@@ -393,6 +393,7 @@ namespace Samogina_LAB3
             {
                 Add(rnd.Next() % rang);
             }
+            Sort();
         }
         public void toNodeSet(Nodelist ptr)
         {
@@ -400,11 +401,13 @@ namespace Samogina_LAB3
             {
                 Add(ptr[i].Data);
             }
+            Sort();
         }
         new public void Input()
         {
             var a = int.Parse(Console.ReadLine());
             Add(a);
+            Sort();
         }
         new public object Clone()
         {
@@ -414,6 +417,7 @@ namespace Samogina_LAB3
             {
                 ptr.Add(this[i].Data);
             }
+            ptr.Sort();
             return ptr;
         }
         public void unification(NodeSet other)
@@ -424,7 +428,7 @@ namespace Samogina_LAB3
                 Add(ptr.Data);
                 ptr = ptr.Next;
             }
-
+            Sort();
         } //	объединение двух множеств
         public NodeSet unification_new(NodeSet other)
         {
@@ -441,6 +445,7 @@ namespace Samogina_LAB3
                 nodeSet.Add(ptr2.Data);
                 ptr2 = ptr2.Next;
             }
+            nodeSet.Sort();
             return nodeSet;
         }
         public void Add(int data)
@@ -449,6 +454,7 @@ namespace Samogina_LAB3
             {
                 Push_back(data);
             }
+            Sort();
         }//	добавление элемента к множеству 
         public NodeSet Add_new(int data)
         {
@@ -457,16 +463,19 @@ namespace Samogina_LAB3
             {
                 ptr.Push_back(data);
             }
+            ptr.Sort();
             return ptr;
         }
         public void Del(int data)
         {
             earse_key(data);
+            Sort();
         }// 	удаление элемента 
         public NodeSet Del_new(int data)
         {
             NodeSet ptr = (NodeSet)this.Clone();
             ptr.Del(data);
+            ptr.Sort();
             return ptr;
         }
         public NodeSet intersection_new(NodeSet other)
@@ -482,6 +491,7 @@ namespace Samogina_LAB3
                 }
                 ptr = ptr.Next;
             }
+            ptr2.Sort();
             return ptr2;
         } //	пересечение двух множеств 
         public void intersection(NodeSet other)
@@ -492,6 +502,7 @@ namespace Samogina_LAB3
                 if(other.find(ptr.Data)==null) { Del(ptr.Data); }
                 ptr = ptr.Next;
             }
+            Sort();
         }
 
         public void difference(NodeSet other)
@@ -503,6 +514,7 @@ namespace Samogina_LAB3
                 Del(ptr2.Data);
                 ptr2 = ptr2.Next;
             }
+            Sort(); 
 
         } //	разность двух множеств 
         public NodeSet difference_new(NodeSet other)
@@ -515,6 +527,7 @@ namespace Samogina_LAB3
                 nodeSet.Del(ptr2.Data);
                 ptr2 = ptr2.Next;
             }
+            nodeSet.Sort();
             return nodeSet;
         }
         public NodeSet complement()
@@ -527,6 +540,7 @@ namespace Samogina_LAB3
                 if (find(i) == null) { ptr.Add(i); }
                 
             }
+            ptr.Sort(); 
             return ptr;
         } //дополнение до идеального множества
     }
