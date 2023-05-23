@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Reflection;
-using System.Runtime.Intrinsics.X86;
-using System.Security.Claims;
-using System.Xml.Linq;
 
 namespace Samogina_LAB3
 {
@@ -59,7 +53,7 @@ namespace Samogina_LAB3
                 else { S5.earse_key(4); }
                 S5.PRINT();
                 Console.WriteLine("\n\n9)Измените S5, записав в него 4 числа: 11, 12, 13, 14 (числа вводятся с клавиатуры). Сравните S5 и S4.");
-                // for(int i=0;i<4;i++) { S5.Input(); }
+                for(int i=0;i<4;i++) { S5.Input(); }
                 S5.PRINT();
                 if (S5 == S4) { Console.WriteLine("S5==S4"); }
                 else Console.WriteLine("S5!=S4");
@@ -128,13 +122,14 @@ namespace Samogina_LAB3
 
     class NODE
     {
-        public int Data;
-        public NODE? Next;
-        public NODE? Prev;
+        internal int Data;
+        internal NODE? Next;
+        internal NODE? Prev;
         public NODE(int data, NODE? next, NODE? prev) { Data = data; Next = next; Prev = prev; }
         public NODE() { Data = default(int); Next = null; Prev = null; }
         public NODE(int data) { Data = data; Prev = null; Next = null; }
         public void Print() { Console.WriteLine(this.Data); }
+        
 
     }
 
@@ -154,7 +149,7 @@ namespace Samogina_LAB3
         public Nodelist(Nodelist A)
         {
             Head = new NODE(A.Head.Data);
-            NODE current = A.Head.Next;
+            NODE? current = A.Head.Next;
 
             while (current != null)
             {
@@ -164,9 +159,10 @@ namespace Samogina_LAB3
         }
         public object Clone() {
             Nodelist ptr = new Nodelist();
-            //ptr.n = n;
-            for(int i=0;i<n; i++) {
-                ptr.Push_back(this[i].Data);
+            NODE? pt = Head;
+            while(pt!=null) {
+                ptr.Push_back(pt.Data);
+                pt = pt.Next;
             }
             return ptr;
         }
@@ -328,9 +324,9 @@ namespace Samogina_LAB3
         public static bool operator == (Nodelist l1, Nodelist l2)
         {
             if (l1.n != l2.n) return false;
-
-            NODE current_A = l1.Head;
-            NODE current_B = l2.Head;
+            if (l1.Head ==null || l2.Head == null) return false;
+            NODE? current_A = l1.Head;
+            NODE? current_B = l2.Head;
 
             for (int i = 0; i < l1.n; i++)
             {
@@ -364,21 +360,24 @@ namespace Samogina_LAB3
         } //перегрузка []
         public void Sort()
         {
-            int j = 0;
-            int tmp = 0;
-            for (int i = 0; i < n; i++)
+            if (this.Head != null)
             {
-                j = i;
-                for (int k = i; k < n; k++)
+                int j = 0;
+                int tmp = 0;
+                for (int i = 0; i < n; i++)
                 {
-                    if (this[j].Data > this[k].Data)
+                    j = i;
+                    for (int k = i; k < n; k++)
                     {
-                        j = k;
+                        if (this[j].Data > this[k].Data)
+                        {
+                            j = k;
+                        }
                     }
+                    tmp = this[i].Data;
+                    this[i].Data = this[j].Data;
+                    this[j].Data = tmp;
                 }
-                tmp = this[i].Data;
-                this[i].Data = this[j].Data;
-                this[j].Data = tmp;
             }
         }  //сортировка
     }
@@ -412,17 +411,18 @@ namespace Samogina_LAB3
         new public object Clone()
         {
             NodeSet ptr = new NodeSet();
-           // ptr.n = n;
-            for (int i = 0; i < n; i++)
+            NODE? pt = Head;
+            while (pt != null)
             {
-                ptr.Add(this[i].Data);
+                ptr.Add(pt.Data);
+                pt = pt.Next;
             }
             ptr.Sort();
             return ptr;
         }
         public void unification(NodeSet other)
         {
-            NODE ptr = other.Head;
+            NODE? ptr = other.Head;
             while (ptr != null)
             {
                 Add(ptr.Data);
@@ -432,8 +432,8 @@ namespace Samogina_LAB3
         } //	объединение двух множеств
         public NodeSet unification_new(NodeSet other)
         {
-            NODE ptr = Head;
-            NODE ptr2 = other.Head;
+            NODE? ptr = Head;
+            NODE? ptr2 = other.Head;
             NodeSet nodeSet= new NodeSet();
             while (ptr != null)
             {
@@ -480,7 +480,7 @@ namespace Samogina_LAB3
         }
         public NodeSet intersection_new(NodeSet other)
         {
-            NODE ptr= new NODE();
+            NODE? ptr= new NODE();
             NodeSet ptr2 = new NodeSet();
             ptr = Head;
             while(ptr != null ) {
@@ -496,7 +496,7 @@ namespace Samogina_LAB3
         } //	пересечение двух множеств 
         public void intersection(NodeSet other)
         {
-            NODE ptr = new NODE();
+            NODE? ptr = new NODE();
             ptr = Head;
             while(ptr != null ) {
                 if(other.find(ptr.Data)==null) { Del(ptr.Data); }
@@ -508,7 +508,7 @@ namespace Samogina_LAB3
         public void difference(NodeSet other)
         {
             NodeSet ptr=this.intersection_new(other);
-            NODE ptr2 = ptr.Head;
+            NODE? ptr2 = ptr.Head;
             while (ptr2!=null)
             {
                 Del(ptr2.Data);
@@ -519,9 +519,9 @@ namespace Samogina_LAB3
         } //	разность двух множеств 
         public NodeSet difference_new(NodeSet other)
         {
-            NodeSet ptr = this.intersection_new(other);
-            NodeSet nodeSet = this;
-            NODE ptr2 = ptr.Head;
+            NodeSet? ptr = this.intersection_new(other);
+            NodeSet? nodeSet = this;
+            NODE? ptr2 = ptr.Head;
             while (ptr2 != null)
             {
                 nodeSet.Del(ptr2.Data);
