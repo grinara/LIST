@@ -395,7 +395,7 @@ namespace Samogina_LAB3
     }
     class NodeSet : Nodelist {
        // protected Nodelist Nodelist;
-        public int  GetSize()
+        new public int GetSize()
         {
             return n;
         }
