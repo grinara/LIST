@@ -1,5 +1,5 @@
-﻿using System;
-https://www.programiz.com/csharp-programming/online-compiler/
+using System;
+//https://www.programiz.com/csharp-programming/online-compiler/
 namespace Samogina_LAB3
 {
     class LAB3
@@ -259,7 +259,7 @@ namespace Samogina_LAB3
             NODE righ = ptr.GetNext();
             left.InerNext(righ);
             righ.InerPrev(left);
-           // n--;
+            n--;
         }
         public NODE find(int data)// найти по ключу
         {
