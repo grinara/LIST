@@ -1,5 +1,5 @@
 ﻿using System;
-
+https://www.programiz.com/csharp-programming/online-compiler/
 namespace Samogina_LAB3
 {
     class LAB3
@@ -395,7 +395,7 @@ namespace Samogina_LAB3
     }
     class NodeSet : Nodelist {
        // protected Nodelist Nodelist;
-        new public int GetSize()
+        public int  GetSize()
         {
             return n;
         }
