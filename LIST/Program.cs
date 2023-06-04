@@ -6,7 +6,7 @@ namespace Samogina_LAB3
     {
         static void Main()
         {
-            int k = 2;
+            int k = 1;
             if (k == 1)
             {
                 Console.WriteLine("1)Создайте пустой список S1. Добавьте элемент 1 в голову, добавьте элемент 10 в хвост. Выведите S1 на экран (используя функцию Print)");
@@ -337,14 +337,9 @@ namespace Samogina_LAB3
         {
             if (l1.n != l2.n) return false;
             if (l1.Head ==null || l2.Head == null) return false;
-            NODE? current_A = l1.Head;
-            NODE? current_B = l2.Head;
-
             for (int i = 0; i < l1.n; i++)
             {
-                if (current_A.GetData() != current_B.GetData()) return false;
-                current_B = current_B.GetNext();
-                current_A = current_A.GetNext();
+                if (l1.find(l2[i].GetData()) == null) return false;
             }
             return true;
         } //перегрузка ==
@@ -395,7 +390,7 @@ namespace Samogina_LAB3
     }
     class NodeSet : Nodelist {
        // protected Nodelist Nodelist;
-        public int  GetSize()
+        public int GetSize()
         {
             return n;
         }
@@ -519,7 +514,6 @@ namespace Samogina_LAB3
             }
             Sort();
         }
-
         public void difference(NodeSet other)
         {
             NodeSet ptr=this.intersection_new(other);
