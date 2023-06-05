@@ -6,7 +6,7 @@ namespace Samogina_LAB3
     {
         static void Main()
         {
-            int k = 1;
+            int k = 2;
             if (k == 1)
             {
                 Console.WriteLine("1)Создайте пустой список S1. Добавьте элемент 1 в голову, добавьте элемент 10 в хвост. Выведите S1 на экран (используя функцию Print)");
@@ -398,9 +398,11 @@ namespace Samogina_LAB3
         public NodeSet(int size,int rang)
         {
             Random rnd = new Random();
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size;)
             {
-                Add(rnd.Next() % rang);
+                int w = rnd.Next() % rang;
+                if (find(w) == null) { Add(w);i++; }
+                
             }
             Sort();
         }
