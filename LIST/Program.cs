@@ -65,55 +65,69 @@ namespace Samogina_LAB3
             {
                 Console.WriteLine("\n\n\n1)Создайте множество S1, из 10 случайных чисел. Выведите S1 на экран (используя функцию Print).");
                 NodeSet S1= new NodeSet(10,20);
+                S1.Sort();
                 S1.PRINT();
                 Console.WriteLine("\n\n2)Создайте множество S2 и инициализируйте его (при создании) значением S1.  Выведите S2 на экран (используйте потоковый вывод). Проверьте равенство множеств S1  и  S2.");
                 NodeSet S2 = (NodeSet)S1.Clone();
+                S2.Sort();
                 S2.PRINT();
                 if (S2 == S1) { Console.WriteLine("S2==S1"); }
                 Console.WriteLine("\n\n3)Проверьте, есть ли в S1 элемент 5. Создайте множество S3, которое получается  удалением/добавлением из S1 элемента 5. Проверьте, что S1 и S3 – не равны.");
                 NodeSet S3;
                 if (S1.find(5) == null) { S3 = (NodeSet)S1.Clone(); S3 = S1.Add_new(5); }
                 else { S3=(NodeSet)S1.Clone();S3 = S1.Del_new(5); }
+                S3.Sort();
                 S3.PRINT();
                 if (S1!=S3) { Console.WriteLine("S1!=S3"); }
                 Console.WriteLine("\n\n4)Создайте пустое множество S4. Проверьте его на пустоту.  Добавьте в S4 последовательно числа 5, 10, 15, 5.  Выведите S4 на экран.");
                 NodeSet S4=new NodeSet();
                 if (S4.is_empy()) { Console.WriteLine("S4 - empy"); }
                 S4.Add(5); S4.Add(10); S4.Add(15); S4.Add(5);
+                S4.Sort();
                 S4.PRINT();
                 Console.WriteLine("\n\n5)Создайте пустое множество S5.  Инициализируйте его множеством S4.  Проверьте, что во множестве S5 есть элемент 15 и удалите его. Выведите получившееся множество на экран.");
                 NodeSet S5 = S4;
                 if (S5.find(15) != null) { S5.Del(15); }
+                S5.Sort();
                 S5.PRINT();
                 Console.WriteLine("\n\n6)Создайте список T, из 20 случайных чисел. Выведите T на экран. Создайте из T множество S6.  Выведите S6 на экран. Определите количество элементов в S6.");
                 Nodelist T=new Nodelist(20,50);
                 T.PRINT();
                 NodeSet S6=new NodeSet();
                 S6.toNodeSet(T);
+                S6.Sort();
                 S6.PRINT();
                 Console.WriteLine(S6.GetSize());
                 Console.WriteLine("\n\n7)Найдите S7 – дополнение S6 до универсального. Найдите множество S8=S7∩S6.");//пересечение
                 NodeSet S7=S6.complement();
+                S7.Sort();
                 S7.PRINT();
                 NodeSet S8 = S7.intersection_new(S6);
+                S8.Sort();
                 S8.PRINT();
                 Console.WriteLine("\n\n8)Создайте множество S9={1,3,5,7,9,11,13,15,17,19,21,23,25,27,29}.  Найдите V1 =S7 ∩ S9,  V2 = S7 ∪ S9,  V3 = S7 \\ S9.\r\n");
                 NodeSet S9 = new NodeSet();
                 for(int i=-1; i<29;) { S9.Add(i+2);i += 2; }
+                S9.Sort();
                 S9.PRINT();
                 NodeSet V1=S7.intersection_new(S9);
                 NodeSet V2 = S7.unification_new(S9);
                 NodeSet V3 = S7.difference_new(S9);
+                V1.Sort();
+                V2.Sort();
+                V3.Sort();
                 V1.PRINT();
                 V2.PRINT();
                 V3.PRINT();
                 Console.WriteLine("\n\n9)Измените V1, объединив его с V3. Сравните V1  с S7.");
                 V1= (NodeSet)(V1.unification_new(V3)).Clone();
+                V1.Sort();
                 V1.PRINT();
                 if (V1 == S7) { Console.WriteLine("V1==S7"); }
                 else { Console.WriteLine("V1!=S7"); }
                 Console.WriteLine("\n\n10)Измените множество V2, заменив его разностью V2 и V3. Сравните V2  с  S9");
                 V2= (NodeSet)(V2.difference_new(V3)).Clone();
+                V2.Sort();
                 V2.PRINT();
                 if (V1 == S7) { Console.WriteLine("V2==S9"); }
                 else { Console.WriteLine("V2!=S9"); }
@@ -412,13 +426,13 @@ namespace Samogina_LAB3
             {
                 Add(ptr[i].GetData());
             }
-            Sort();
+           // Sort();
         }
         new public void Input()
         {
             var a = int.Parse(Console.ReadLine());
             Add(a);
-            Sort();
+          //  Sort();
         }
         new public object Clone()
         {
@@ -429,7 +443,7 @@ namespace Samogina_LAB3
                 ptr.Add(pt.GetData());
                 pt = pt.GetNext();
             }
-            ptr.Sort();
+           // ptr.Sort();
             return ptr;
         }
         public void unification(NodeSet other)
@@ -440,7 +454,7 @@ namespace Samogina_LAB3
                 Add(ptr.GetData());
                 ptr = ptr.GetNext();
             }
-            Sort();
+         //   Sort();
         } //	объединение двух множеств
         public NodeSet unification_new(NodeSet other)
         {
@@ -457,7 +471,7 @@ namespace Samogina_LAB3
                 nodeSet.Add(ptr2.GetData());
                 ptr2 = ptr2.GetNext();
             }
-            nodeSet.Sort();
+          //  nodeSet.Sort();
             return nodeSet;
         }
         public void Add(int data)
@@ -466,7 +480,7 @@ namespace Samogina_LAB3
             {
                 Push_back(data);
             }
-            Sort();
+          //  Sort();
         }//	добавление элемента к множеству 
         public NodeSet Add_new(int data)
         {
@@ -475,19 +489,19 @@ namespace Samogina_LAB3
             {
                 ptr.Push_back(data);
             }
-            ptr.Sort();
+           // ptr.Sort();
             return ptr;
         }
         public void Del(int data)
         {
             earse_key(data);
-            Sort();
+           // Sort();
         }// 	удаление элемента 
         public NodeSet Del_new(int data)
         {
             NodeSet ptr = (NodeSet)this.Clone();
             ptr.Del(data);
-            ptr.Sort();
+          //  ptr.Sort();
             return ptr;
         }
         public NodeSet intersection_new(NodeSet other)
@@ -503,7 +517,7 @@ namespace Samogina_LAB3
                 }
                 ptr = ptr.GetNext();
             }
-            ptr2.Sort();
+         //   ptr2.Sort();
             return ptr2;
         } //	пересечение двух множеств 
         public void intersection(NodeSet other)
@@ -514,7 +528,7 @@ namespace Samogina_LAB3
                 if(other.find(ptr.GetData())==null) { Del(ptr.GetData()); }
                 ptr = ptr.GetNext();
             }
-            Sort();
+          //  Sort();
         }
         public void difference(NodeSet other)
         {
@@ -525,7 +539,7 @@ namespace Samogina_LAB3
                 Del(ptr2.GetData());
                 ptr2 = ptr2.GetNext();
             }
-            Sort(); 
+         //   Sort(); 
 
         } //	разность двух множеств 
         public NodeSet difference_new(NodeSet other)
@@ -538,7 +552,7 @@ namespace Samogina_LAB3
                 nodeSet.Del(ptr2.GetData());
                 ptr2 = ptr2.GetNext();
             }
-            nodeSet.Sort();
+          //  nodeSet.Sort();
             return nodeSet;
         }
         public NodeSet complement()
@@ -551,7 +565,7 @@ namespace Samogina_LAB3
                 if (find(i) == null) { ptr.Add(i); }
                 
             }
-            ptr.Sort(); 
+          //  ptr.Sort(); 
             return ptr;
         } //дополнение до идеального множества
     }
