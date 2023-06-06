@@ -1,5 +1,6 @@
 using System;
 //https://www.programiz.com/csharp-programming/online-compiler/
+//https://rextester.com/
 namespace Samogina_LAB3
 {
     class LAB3
