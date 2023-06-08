@@ -432,8 +432,8 @@ namespace Samogina_LAB3
             var str = Console.ReadLine();
             if (str != null)
             {
-                string[] words = str.Split(' ');
-                foreach (string x in words)
+                string[] num = str.Split(' ');
+                foreach (string x in num)
                 {
                     Add(int.Parse(x));
                 }
