@@ -8,7 +8,7 @@ namespace Samogina_LAB3
     {
         static void Main()
         {
-            int k = 2;
+            int k = 1;
             if (k == 1)
             {
                 Console.WriteLine("1)Создайте пустой список S1. Добавьте элемент 1 в голову, добавьте элемент 10 в хвост. Выведите S1 на экран (используя функцию Print)");
@@ -21,6 +21,8 @@ namespace Samogina_LAB3
                 S2.PRINT();
                 Console.Write("max - "); S2.Max().Print();
                 Console.Write("min - "); S2.Min().Print();
+                Console.WriteLine();
+                Console.WriteLine();
                 S2.Sort();
                 S2.PRINT();
                 Console.WriteLine("\n\n3)Найдите в S2 2-й элемент и выведите его на экран. Удалите 2-й элемент списка S2. ");
@@ -114,12 +116,12 @@ namespace Samogina_LAB3
                 V2.PRINT();
                 V3.PRINT();
                 Console.WriteLine("\n\n9)Измените V1, объединив его с V3. Сравните V1  с S7.");
-                V1= (NodeSet)(V1.unification_new(V3)).Clone();
+                V1= (NodeSet)(V1.unification_new(V3));
                 V1.PRINT();
                 if (V1==S7) { Console.WriteLine("V1==S7"); }
                 else { Console.WriteLine("V1!=S7"); }
                 Console.WriteLine("\n\n10)Измените множество V2, заменив его разностью V2 и V3. Сравните V2  с  S9");
-                V2= (NodeSet)(V2.difference_new(V3)).Clone();
+                V2= (NodeSet)(V2.difference_new(V3));
                 V2.PRINT();
                 if (V1 == S7) { Console.WriteLine("V2==S9"); }
                 else { Console.WriteLine("V2!=S9"); }
@@ -401,6 +403,10 @@ namespace Samogina_LAB3
             get
             {
                 return getAt(index);
+            }
+            set
+            {
+                insert(index, value.data);
             }
         } //перегрузка []
         public void Sort()
