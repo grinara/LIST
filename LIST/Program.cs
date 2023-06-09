@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 //https://www.programiz.com/csharp-programming/online-compiler/
 //https://rextester.com/
 namespace Samogina_LAB3
@@ -7,7 +8,7 @@ namespace Samogina_LAB3
     {
         static void Main()
         {
-            int k = 2;
+            int k = 1;
             if (k == 1)
             {
                 Console.WriteLine("1)Создайте пустой список S1. Добавьте элемент 1 в голову, добавьте элемент 10 в хвост. Выведите S1 на экран (используя функцию Print)");
@@ -96,7 +97,7 @@ namespace Samogina_LAB3
                 NodeSet S6=new NodeSet();
                 S6.toNodeSet(T);
                 S6.PRINT();
-                Console.WriteLine(S6.Size);
+                Console.WriteLine(S6.size);
                 Console.WriteLine("\n\n7)Найдите S7 – дополнение S6 до универсального. Найдите множество S8=S7∩S6.");//пересечение
                 NodeSet S7=S6.complement();
                 S7.PRINT();
@@ -154,17 +155,27 @@ namespace Samogina_LAB3
     }
     class Nodelist
     {
-        protected int n;
+        //protected int n;
         protected NODE? Head;
         protected NODE? Tail;
-        public Nodelist() { n = 0; Head = null;Tail = null; }
+        public NODE head
+        {
+            get { return Head; }
+            set { Head = value; }
+        }
+        public NODE tail
+        {
+            get { return Tail; }
+            set { Tail = value; }
+        }
+        public Nodelist() { Head = null;Tail = null; }
         public Nodelist(int size,int rang=1000) {
             Random rnd = new Random();
             for(int i=0;i<size; i++)
             {
                 Push_back(rnd.Next()%rang);
             }
-            Sort();
+            //Sort();
         }
         public Nodelist(int[] a)
         {
@@ -194,10 +205,6 @@ namespace Samogina_LAB3
             }
             return ptr;
         }
-        public int Size
-        {
-            get { return n; }
-        }
         public NODE Push_front(int data) // добавление в начало
         {
             NODE ptr = new NODE(data);
@@ -205,7 +212,6 @@ namespace Samogina_LAB3
             if (Head != null) { Head.prev=ptr; }
             if (Tail == null) { Tail = ptr; }
             Head = ptr;
-            n++;
             return ptr;
         }
         public NODE Push_back(int data) //добавление в конец
@@ -215,7 +221,6 @@ namespace Samogina_LAB3
             if (Tail != null) { Tail.next=ptr; }
             if (Head == null) { Head = ptr; }
             Tail = ptr;
-            n++;
             return ptr;
         }
         public void Pop_front()
@@ -224,7 +229,6 @@ namespace Samogina_LAB3
             NODE? ptr = Head.next;
             if (ptr != null) { ptr.prev=null; }
             else Tail = ptr;
-            n--;
             Head = ptr;
         }//удаление с головы
         public void Pop_back() //удаление с конца
@@ -233,7 +237,6 @@ namespace Samogina_LAB3
             NODE? ptr = Tail.prev;
             if (ptr != null) { ptr.next=(null); }
             else Head = ptr;
-            n--;
             Tail = ptr;
         }
         public NODE getAt(int index) //поиск по позиции
@@ -261,7 +264,6 @@ namespace Samogina_LAB3
             ptr.next=right;
             left.next=ptr;
             right.prev = ptr;
-            n++;
             return ptr;
         }
         public void earse(int index) // удаление по позиции
@@ -274,7 +276,6 @@ namespace Samogina_LAB3
             NODE righ = ptr.next;
             left.next=righ;
             righ.prev=left;
-            n--;
         }
         public NODE find(int data)// найти по ключу
         {
@@ -300,7 +301,6 @@ namespace Samogina_LAB3
             ptr.next=right;
             left.next=ptr;
             right.prev=ptr;
-            n++;
             return ptr;
         }
         public void earse_key(int data) // удаление по ключу
@@ -313,7 +313,6 @@ namespace Samogina_LAB3
             NODE righ = ptr.next;
             left.next=righ;
             righ.prev = left;
-            n--;
         }
         public NODE Max() //максимум
         {
@@ -338,8 +337,8 @@ namespace Samogina_LAB3
             return data;
         }//минимум
         public bool is_empy() { if (Head == null) return true; return false; } //проверка на пустоту
-        public void clear() { Head = null;Tail = null;n = 0; }//очистка
-        public override bool Equals(object? obj)
+        public void clear() { Head = null;Tail = null; }//очистка
+      /*  public override bool Equals(object? obj)
         {
             if (obj == null || !this.GetType().Equals(obj.GetType())) return false;
             if (n != ((Nodelist)obj).n) return false;
@@ -350,6 +349,7 @@ namespace Samogina_LAB3
             }
             return true;
         }
+      */
         public static Nodelist operator +(Nodelist l1, Nodelist l2)
         {
             Nodelist list = new Nodelist();
@@ -361,11 +361,21 @@ namespace Samogina_LAB3
         } //перегрузка +
         public static bool operator == (Nodelist l1, Nodelist l2)
         {
-            return l1.Equals(l2);
+           // if (l1.n != l2.n) return false;
+            if (l1.Head == null || l2.Head == null) return false;
+            NODE ptr=l1.Head;
+            NODE? ptr2 = l2.Head;
+            while (ptr!=null || ptr2!=null)
+            {
+                if (ptr.data != ptr2.data) return false;
+                ptr = ptr.next;
+                ptr2= ptr2.next;
+            }
+            return true;
         } //перегрузка ==
         public static bool operator !=(Nodelist l1, Nodelist l2)
         {
-            return !(l1.Equals(l2));
+            return !(l1==l2);
         } //перегрузка !=
         public void PRINT()
         {
@@ -406,8 +416,13 @@ namespace Samogina_LAB3
         }//сортировка
     }
     class NodeSet : Nodelist {
-
-        public NodeSet() { n = 0; }
+        protected int Size;
+        public int size
+        {
+            get { return Size; }
+            set { Size = value; }
+        }
+        public NodeSet() { Size = 0; }
         public NodeSet(int size,int rang)
         {
             Random rnd = new Random();
@@ -419,11 +434,13 @@ namespace Samogina_LAB3
             }
            // Sort();
         }
-        public void toNodeSet(Nodelist ptr)
+        public void toNodeSet(Nodelist l1)
         {
-            for (int i = 0; i < ptr.Size; i++)
+            NODE ptr = l1.head;
+            while (ptr!=null)
             {
-                Add(ptr[i].data);
+                Add(ptr.data);
+                ptr=ptr.next;
             }
            // Sort();
         }
@@ -574,5 +591,19 @@ namespace Samogina_LAB3
           //  ptr.Sort(); 
             return ptr;
         } //дополнение до идеального множества
+        public static bool operator == (NodeSet l1, NodeSet l2)
+        {
+            if (l1.Size != l2.Size) return false;
+            if (l1.Head == null || l2.Head == null) return false;
+            for (int i = 0; i < l1.Size; i++)
+            {
+                if (l1.find(l2[i].data) == null) return false;
+            }
+            return true;
+        } //перегрузка ==
+        public static bool operator !=(NodeSet l1, NodeSet l2)
+        {
+            return !(l1==l2);
+        } //перегрузка !=
     }
 }
