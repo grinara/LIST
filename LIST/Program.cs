@@ -8,7 +8,7 @@ namespace Samogina_LAB3
     {
         static void Main()
         {
-            int k = 1;
+            int k = 2;
             if (k == 1)
             {
                 Console.WriteLine("1)Создайте пустой список S1. Добавьте элемент 1 в голову, добавьте элемент 10 в хвост. Выведите S1 на экран (используя функцию Print)");
@@ -453,6 +453,7 @@ namespace Samogina_LAB3
                 foreach (string x in num)
                 {
                     Add(int.Parse(x));
+                    Size++;
                 }
             }
             //  Sort();
@@ -502,6 +503,7 @@ namespace Samogina_LAB3
             if (find(data) == null)
             {
                 Push_back(data);
+                Size++;
             }
           //  Sort();
         }//	добавление элемента к множеству 
@@ -511,6 +513,7 @@ namespace Samogina_LAB3
             if (find(data) == null)
             {
                 ptr.Push_back(data);
+                ptr.Size++;
             }
            // ptr.Sort();
             return ptr;
@@ -518,12 +521,14 @@ namespace Samogina_LAB3
         public void Del(int data)
         {
             earse_key(data);
+            Size--;
            // Sort();
         }// 	удаление элемента 
         public NodeSet Del_new(int data)
         {
             NodeSet ptr = (NodeSet)this.Clone();
             ptr.Del(data);
+            ptr.Size--;
           //  ptr.Sort();
             return ptr;
         }
