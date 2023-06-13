@@ -9,7 +9,7 @@ namespace Samogina_LAB3
     {
         static void Main()
         {
-            int k = 1;
+            int k = 2;
             if (k == 1)
             {
                 Console.WriteLine("1)Создайте пустой список S1. Добавьте элемент 1 в голову, добавьте элемент 10 в хвост. Выведите S1 на экран (используя функцию Print)");
@@ -196,7 +196,7 @@ namespace Samogina_LAB3
             {
                 this.Push_back(A[i].data);
             }
-            Console.WriteLine();
+           // Console.WriteLine();
         }
         public object Clone() {
             Nodelist ptr = new Nodelist();
@@ -424,11 +424,16 @@ namespace Samogina_LAB3
         {
             Random rnd = new Random();
             Size = size;
-            for(NODE i = Head; i != null; i = i.next) {
-                for (NODE j = i.next; j != null; j = j.next) {
-                    if (i.data == j.data)
+            for (var i = 0; i < Size; i++)
+            {
+                for (var j = 0; j < Size; j++)
+                {
+                    if (i != j)
                     {
-                        Del(j.data);
+                        if (this[i].data == this[j].data)
+                        {
+                            Del(this[i].data);
+                        }
                     }
                 }
             }
@@ -438,23 +443,25 @@ namespace Samogina_LAB3
         }
         public NodeSet(Nodelist l1):base(l1)
         {
-
-            for (NODE i = Head; i != null; i = i.next)
-            {
-                for (NODE j = i.next; j != null; j = j.next)
-                {
-                    if (i.data == j.data)
-                    {
-                        Del(j.data);
-                    }
-                }
-            }
             Size = 0;
             NODE ptr = Head;
             while (ptr != null)
             {
                 Size++;
                 ptr= ptr.next;
+            }
+            for (var i = 0; i < size; i++)
+            {
+                for (var j = 0; j < size; j++)
+                {
+                    if (i != j)
+                    {
+                        if (this[i].data == this[j].data)
+                        {
+                            Del(this[i].data);
+                        }
+                    }
+                }
             }
         }
         public NodeSet(NodeSet A)
