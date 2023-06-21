@@ -178,7 +178,7 @@ namespace Samogina_LAB3
             {
                 Push_back(rnd.Next()%rang);
             }
-            //Sort();
+            Sort();
         }
         public Nodelist(int[] a)
         {
@@ -196,7 +196,8 @@ namespace Samogina_LAB3
             {
                 this.Push_back(A[i].data);
             }
-           // Console.WriteLine();
+            // Console.WriteLine();
+            Sort();
         }
         public object Clone() {
             Nodelist ptr = new Nodelist();
@@ -319,24 +320,24 @@ namespace Samogina_LAB3
         public NODE Max() //максимум
         {
             NODE? ptr = Head;
-            NODE? data = ptr;
+            NODE? dat = ptr;
             while (ptr != null)
             {
-                if (System.Convert.ToChar(data.data) < System.Convert.ToChar(ptr.data)) { data = ptr; }
+                if (dat.data < ptr.data) { dat = ptr; }
                 ptr = ptr.next;
             }
-            return data;
+            return dat;
         }
         public NODE Min()
         {
             NODE? ptr = Head;
-            NODE? data = ptr;
+            NODE? dat = ptr;
             while (ptr != null)
             {
-                if (System.Convert.ToInt32(data.data) > System.Convert.ToInt32(ptr.data)) { data = ptr; }
+                if (dat.data > ptr.data) { dat = ptr; }
                 ptr = ptr.next;
             }
-            return data;
+            return dat;
         }//минимум
         public bool is_empy() { if (Head == null) return true; return false; } //проверка на пустоту
         public void clear() { Head = null;Tail = null; }//очистка
@@ -419,7 +420,7 @@ namespace Samogina_LAB3
             get { return Size; }
             set { Size = value; }
         }
-        public NodeSet() { Size = 0; }
+        public NodeSet():base() { Size = 0; }
         public NodeSet(int size,int rang):base(size,rang)
         {
             Random rnd = new Random();
@@ -448,7 +449,7 @@ namespace Samogina_LAB3
             while (ptr != null)
             {
                 Size++;
-                ptr= ptr.next;
+                ptr = ptr.next;
             }
             for (var i = 0; i < size; i++)
             {
@@ -545,21 +546,18 @@ namespace Samogina_LAB3
                 ptr.Push_back(data);
                 ptr.Size++;
             }
-           // ptr.Sort();
             return ptr;
         }
         public void Del(int data)
         {
             earse_key(data);
             Size--;
-           // Sort();
         }// 	удаление элемента 
         public NodeSet Del_new(int data)
         {
             NodeSet ptr = (NodeSet)this.Clone();
             ptr.Del(data);
             ptr.Size--;
-          //  ptr.Sort();
             return ptr;
         }
         public NodeSet intersection_new(NodeSet other)
@@ -575,7 +573,6 @@ namespace Samogina_LAB3
                 }
                 ptr = ptr.next;
             }
-         //   ptr2.Sort();
             return ptr2;
         } //пересечение двух множеств 
         public void intersection(NodeSet other)
@@ -624,8 +621,8 @@ namespace Samogina_LAB3
         } //дополнение до идеального множества
         public override bool Equals(object? obj)
         {
-            if (Size != ((NodeSet)obj).Size) return false;
             if (Head == null || ((NodeSet)obj).Head == null) return false;
+            if (Size != ((NodeSet)obj).Size) return false;
             for (int i = 0; i < Size; i++)
             {
                 if (find(((NodeSet)obj)[i].data) == null) return false;
